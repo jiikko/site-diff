@@ -5,5 +5,5 @@ table
     th
   - @sites.each do |site|
     tr
-      td = site.name
+      td = link_to site.name, site
       td = site.url

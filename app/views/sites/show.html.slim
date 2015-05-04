@@ -1,0 +1,15 @@
+h1
+  = @site.name
+  | Version一覧
+= link_to "戻", sites_path
+
+table border=1
+  tr
+    th Version Name
+    th 作成日
+    th
+  - @site.captured_versions.each do |captured_version|
+    tr
+      td = captured_version.name
+      td = captured_version.created_at.to_date
+      td = link_to '詳細', [@site, captured_version]

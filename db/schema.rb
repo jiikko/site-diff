@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20150504064807) do
 
   create_table "captured_pages", force: :cascade do |t|
     t.integer  "captured_version_id",     limit: 4,   null: false
-    t.integer  "target_pages_id",         limit: 4,   null: false
+    t.integer  "target_page_id",          limit: 4,   null: false
     t.string   "screenshot_file_name",    limit: 255
     t.string   "screenshot_content_type", limit: 255
     t.integer  "screenshot_file_size",    limit: 4
@@ -25,13 +25,13 @@ ActiveRecord::Schema.define(version: 20150504064807) do
   end
 
   add_index "captured_pages", ["captured_version_id"], name: "index_captured_pages_on_captured_version_id", using: :btree
-  add_index "captured_pages", ["target_pages_id"], name: "index_captured_pages_on_target_pages_id", using: :btree
+  add_index "captured_pages", ["target_page_id"], name: "index_captured_pages_on_target_page_id", using: :btree
 
   create_table "captured_versions", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "site_id",    limit: 4,   null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "name",       limit: 4, default: 1
+    t.integer  "site_id",    limit: 4,             null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "sites", force: :cascade do |t|

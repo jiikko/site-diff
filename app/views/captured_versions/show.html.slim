@@ -1,0 +1,15 @@
+h1
+  | Version
+  = @captured_version.name
+  | の
+  = @site.name
+= link_to "戻", @site
+
+table border=1
+  tr
+    th Path
+    th
+  - @captured_version.captured_pages.each do |captured_page|
+    tr
+      td = captured_page.target_page.path
+      td = image_tag captured_page.screenshot.url(:thumb)
