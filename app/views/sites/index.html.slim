@@ -1,0 +1,9 @@
+h1 一覧
+table
+  tr
+    th
+    th
+  - @sites.each do |site|
+    tr
+      td = site.name
+      td = site.url
