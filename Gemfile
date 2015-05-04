@@ -25,6 +25,7 @@ gem 'nested_form'
 gem 'capybara'
 gem 'selenium-webdriver'
 gem 'chromedriver-helper'
+gem 'sugoi_webpage_capture', require: false
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
