@@ -16,14 +16,13 @@ namespace :db do
       Capybara.configure do |config|
         config.run_server = false
         config.default_driver = :selenium
-        config.app_host = site.url
       end
       Capybara.register_driver :selenium do |app|
         Capybara::Selenium::Driver.new(app, browser: :chrome)
       end
 
       site.target_pages.each do |target_page|
-        visit target_page.path
+        visit site.url + target_page.path
         tempfile = Tempfile.new("ss")
         page.driver.save_screenshot(tempfile, full: true)
         site.captured_version.captured_pages.create!(
