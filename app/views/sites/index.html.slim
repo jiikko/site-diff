@@ -1,9 +1,12 @@
 h1 一覧
-table
+= link_to "増", new_site_path
+table border=1
   tr
-    th
-    th
+    th サイト名
+    th URL
+    th URL
   - @sites.each do |site|
     tr
       td = link_to site.name, site
       td = site.url
+      td = link_to 'edit', edit_site_path(site)

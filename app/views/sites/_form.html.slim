@@ -1,4 +1,15 @@
-= form_for @site do |f|
-  p = f.text_field :name
-  p = f.text_field :url
+= nested_form_for @site do |f|
+  p
+    p サイト名
+    = f.text_field :name, size: "50"
+  p
+    p URL(末尾のスラッシュなしで)
+    = f.text_field :url, size: "50"
+  h2 スクリーンショット対応path
+  p パス(ホスト名なしのスラッシュ開始で)
+  = f.fields_for :target_pages do |ff|
+    p = ff.hidden_field :site_id
+    p = ff.text_field :path, size: "50"
+  = f.link_to_add '増', :target_pages
+
   p = f.submit
