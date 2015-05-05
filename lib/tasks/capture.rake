@@ -12,6 +12,7 @@ namespace :db do
           target_page: target_page
         )
         CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+          puts "start #{environment_name} to #{captured_page.url}"
           screenshot = SugoiWebpageCapture::Browser.new(environment_name)
           tempfile = screenshot.capture(site.url + target_page.path)
           captured_page.captured_environments.create!(

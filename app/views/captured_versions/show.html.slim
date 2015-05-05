@@ -5,10 +5,14 @@ h1
   = @site.name
 = link_to "戻", @site
 
-table border=1
-  tr
-    th Path
-    th
-  - @captured_version.captured_pages.each do |captured_page|
+- CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+  h2 = environment_name
+  table border=1
     tr
-      td = captured_page.target_page.path
+      th Path
+      th
+    - (@captured_environment_with_names[environment_name.to_s] || []).each do |environment|
+      tr
+        td = environment.captured_page.target_page.path
+        td = link_to environment.screenshot.url(:original) do
+          - image_tag environment.screenshot.url(:thumb)
