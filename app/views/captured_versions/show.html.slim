@@ -14,5 +14,5 @@ h1
     - (@captured_environment_with_names[environment_name.to_s] || []).each do |environment|
       tr
         td = environment.captured_page.target_page.path
-        td = link_to environment.screenshot.url(:original) do
+        td = link_to environment.screenshot.url(:normal) do
           - image_tag environment.screenshot.url(:thumb)
