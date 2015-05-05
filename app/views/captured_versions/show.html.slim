@@ -12,5 +12,3 @@ table border=1
   - @captured_version.captured_pages.each do |captured_page|
     tr
       td = captured_page.target_page.path
-      td = link_to captured_page.screenshot.url(:original) do
-        - image_tag captured_page.screenshot.url(:thumb)

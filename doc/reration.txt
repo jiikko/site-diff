@@ -1,0 +1,22 @@
+----------
+Reration
+----------
+site-captured_version-captured_page-captured_environment-schreenshot
+      |                            |                      |_captured_environment-schreenshot
+      |                            |                      |_captured_environment-schreenshot
+      |                            |
+      |                            |_captured_page-captured_environment-schreenshot
+      |                                                    |_captured_environment-schreenshot
+      |                                                    |_captured_environment-schreenshot
+      |
+      |_captured_version-captured_page-captured_environment-schreenshot
+                                  |                        |_captured_environment-schreenshot
+                                  |                        |_captured_environment-schreenshot
+                                  |
+                                  |_captured_page-captured_environment-schreenshot
+                                                           |_captured_environment-schreenshot
+                                                           |_captured_environment-schreenshot
+
+site-target_page-captured_page
+    |_target_page-captured_page
+    |_target_page-captured_page

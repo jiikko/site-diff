@@ -11,17 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504064807) do
+ActiveRecord::Schema.define(version: 20150505042943) do
 
-  create_table "captured_pages", force: :cascade do |t|
-    t.integer  "captured_version_id",     limit: 4,   null: false
-    t.integer  "target_page_id",          limit: 4,   null: false
+  create_table "captured_environments", force: :cascade do |t|
+    t.string   "name",                    limit: 255
+    t.integer  "captured_page_id",        limit: 4,   null: false
     t.string   "screenshot_file_name",    limit: 255
     t.string   "screenshot_content_type", limit: 255
     t.integer  "screenshot_file_size",    limit: 4
     t.datetime "screenshot_updated_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+  end
+
+  add_index "captured_environments", ["captured_page_id"], name: "index_captured_environments_on_captured_page_id", using: :btree
+
+  create_table "captured_pages", force: :cascade do |t|
+    t.integer  "captured_version_id", limit: 4, null: false
+    t.integer  "target_page_id",      limit: 4, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "captured_pages", ["captured_version_id"], name: "index_captured_pages_on_captured_version_id", using: :btree
