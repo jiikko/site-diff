@@ -7,7 +7,7 @@ namespace :db do
     ENV['SITES'].split(/,/).each do |site_name|
       site = Site.find_by!(name: site_name)
       site.create_captured_version_with_inc!
-      screenshot = SugoiWebpageCapture::Screenshot.new
+      screenshot = SugoiWebpageCapture::Browser.new
       site.target_pages.each do |target_page|
         tempfile = screenshot.capture(site.url + target_page.path)
         site.captured_version.captured_pages.create!(
