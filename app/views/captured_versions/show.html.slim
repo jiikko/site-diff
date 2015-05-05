@@ -13,6 +13,9 @@ h1
       th
     - (@captured_environment_with_names[environment_name.to_s] || []).each do |environment|
       tr
-        td = environment.captured_page.target_page.path
-        td = link_to environment.screenshot.url(:normal) do
-          - image_tag environment.screenshot.url(:thumb)
+        td
+          p = link_to environment.captured_page.target_page.path, environment.captured_page.target_page.fullpath, target: :_blank
+          = link_to '元画像(でかい)', environment.screenshot.url(:original), target: :_blank
+        td
+          = link_to environment.screenshot.url(:normal), target: :_blank do
+            = image_tag environment.screenshot.url(:top), style: "max-width: 500px"

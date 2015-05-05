@@ -8,6 +8,10 @@ class CapturedEnvironment < ActiveRecord::Base
 
   belongs_to :captured_page
 
-  has_attached_file :screenshot, styles: { normal: "600x600>", thumb: "300x300>" }
-  validates_attachment_content_type :screenshot, :content_type => /\Aimage\/.*\Z/
+  has_attached_file :screenshot, styles: { normal: "", top: "" },
+    convert_options: {
+      top: "-crop 1024x720+0+0",
+      all: "-quality 19 -strip -resize 70%",
+  }
+    validates_attachment_content_type :screenshot, :content_type => /\Aimage\/.*\Z/
 end

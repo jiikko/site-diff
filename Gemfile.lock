@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jiikko/sugoi_webpage_capture.git
-  revision: 4a74d32c4ba47beba2c6cb344b52c29aea57a8cb
+  revision: a155932d6f9c555d4a5c8c1ee588109501880d54
   branch: edge
   specs:
     sugoi_webpage_capture (0.0.3)
