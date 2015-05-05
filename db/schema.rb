@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505042943) do
+ActiveRecord::Schema.define(version: 20150505175004) do
 
   create_table "captured_environments", force: :cascade do |t|
     t.string   "name",                    limit: 255
@@ -42,6 +42,20 @@ ActiveRecord::Schema.define(version: 20150505042943) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
   end
+
+  create_table "composited_screenshots", force: :cascade do |t|
+    t.integer  "captured_environment_a_id",   limit: 4,   null: false
+    t.integer  "captured_environment_b_id",   limit: 4,   null: false
+    t.string   "compared_image_file_name",    limit: 255
+    t.string   "compared_image_content_type", limit: 255
+    t.integer  "compared_image_file_size",    limit: 4
+    t.datetime "compared_image_updated_at"
+    t.integer  "averaged_pixel",              limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "composited_screenshots", ["captured_environment_b_id", "captured_environment_a_id"], name: "comp_a_b_id", using: :btree
 
   create_table "sites", force: :cascade do |t|
     t.string   "name",       limit: 255
