@@ -9,22 +9,27 @@ namespace :db do
       site.create_captured_version_with_inc!
       site.target_pages.each do |target_page|
         if ENV["DEBUG"]
-          puts "start #{site.url}#{target_page.path}"
+          puts "start #{target_page.fullpath}"
         end
 
         captured_page = site.captured_version.captured_pages.create!(
           target_page: target_page
         )
         CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
-          if ENV["DEBUG"]
-            puts "  #{environment_name}"
-          end
-          browser = SugoiWebpageCapture::Browser.new(environment_name)
-          captured_page.captured_environments.create!(
-            name: environment_name,
-            screenshot: browser.capture(site.url + target_page.path).tempfile
-          )
-          browser.quit
+          thread = Thread.new { # oh...
+            if ENV["DEBUG"]
+              puts "  #{environment_name}"
+            end
+            browser = SugoiWebpageCapture::Browser.new(environment_name)
+            captured_page.captured_environments.create!(
+              name: environment_name,
+              screenshot: browser.capture(target_page.fullpath) { |x|
+                sleep(2) if environment_name == :chrome
+              }.tempfile
+            )
+            browser.quit
+          }
+          thread.join
         end
       end
     end
