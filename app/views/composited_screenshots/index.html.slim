@@ -1,0 +1,7 @@
+
+table border=1
+  tr
+    th
+  - @composited_screenshots.each do |composited_screenshot|
+    tr
+      td = image_tag composited_screenshot.compared_image.url(:top), style: "max-width: 400px"

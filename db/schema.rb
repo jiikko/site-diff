@@ -44,8 +44,10 @@ ActiveRecord::Schema.define(version: 20150505175004) do
   end
 
   create_table "composited_screenshots", force: :cascade do |t|
-    t.integer  "captured_environment_before_id", limit: 4,   null: false
-    t.integer  "captured_environment_after_id",  limit: 4,   null: false
+    t.integer  "before_captured_version_id",     limit: 4,   null: false
+    t.integer  "after_captured_version_id",      limit: 4,   null: false
+    t.integer  "before_captured_environment_id", limit: 4,   null: false
+    t.integer  "after_captured_environment_id",  limit: 4,   null: false
     t.string   "compared_image_file_name",       limit: 255
     t.string   "compared_image_content_type",    limit: 255
     t.integer  "compared_image_file_size",       limit: 4
@@ -55,8 +57,10 @@ ActiveRecord::Schema.define(version: 20150505175004) do
     t.datetime "updated_at",                                 null: false
   end
 
-  add_index "composited_screenshots", ["captured_environment_after_id", "captured_environment_before_id"], name: "comp_b_a_id", using: :btree
-  add_index "composited_screenshots", ["captured_environment_before_id", "captured_environment_after_id"], name: "comp_a_b_id", using: :btree
+  add_index "composited_screenshots", ["after_captured_environment_id", "before_captured_environment_id"], name: "comp_b_a_id", using: :btree
+  add_index "composited_screenshots", ["after_captured_version_id"], name: "index_composited_screenshots_on_after_captured_version_id", using: :btree
+  add_index "composited_screenshots", ["before_captured_environment_id", "after_captured_environment_id"], name: "comp_a_b_id", using: :btree
+  add_index "composited_screenshots", ["before_captured_version_id"], name: "index_composited_screenshots_on_before_captured_version_id", using: :btree
 
   create_table "sites", force: :cascade do |t|
     t.string   "name",       limit: 255

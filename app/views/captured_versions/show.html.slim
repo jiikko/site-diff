@@ -18,4 +18,4 @@ h1
           = link_to '元画像(でかい)', environment.screenshot.url(:original), target: :_blank
         td
           = link_to environment.screenshot.url(:normal), target: :_blank do
-            = image_tag environment.screenshot.url(:top), style: "max-width: 500px"
+            - image_tag environment.screenshot.url(:top), style: "max-width: 500px"

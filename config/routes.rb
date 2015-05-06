@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :sites do
     resources :captured_versions
   end
+  resources :composited_screenshots
 end

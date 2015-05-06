@@ -13,6 +13,7 @@ class SitesController < ApplicationController
 
   def show
     @site = Site.find(params[:id])
+    @captured_versions = @site.captured_versions.includes(:composited_screenshot)
   end
 
   def create

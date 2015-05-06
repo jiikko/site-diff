@@ -16,7 +16,12 @@ namespace :db do
         captured_pages_after[before_key].first.captured_environments.each do |environment_after|
           puts "  #{environment_after.name}"
           environment_before = captured_page_before.captured_environments.detect { |x| x.name == environment_after.name } || raise("途中変更された可能性")
-          CompositedScreenshot.crete_compared_image(environment_before, environment_after)
+          CompositedScreenshot.crete_compared_image(
+            version_before,
+            version_after,
+            environment_before,
+            environment_after
+          )
         end
       end
     end
