@@ -1,7 +1,26 @@
+h1
+  = @site.name
+  | のv
+  = @from_captured_version.name
+  | とv
+  = @from_captured_version.name + 1
+  | の比較
 
-table border=1
-  tr
-    th
-  - @composited_screenshots.each do |composited_screenshot|
+= link_to '戻', @site
+
+- CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+  h2 = environment_name
+  table border=1
     tr
-      td = image_tag composited_screenshot.compared_image.url(:top), style: "max-width: 400px"
+      th Path
+      th
+    - (@captured_environment_with_names[environment_name.to_s] || []).each do |environment|
+      - composited_screenshot = @composited_screenshots.detect { |x| x.before_captured_environment_id == environment.id  }
+      tr
+        td
+          p = link_to environment.captured_page.target_page.path, environment.captured_page.target_page.fullpath, target: :_blank
+          = link_to '元画像(でかい)', composited_screenshot.compared_image.url(:original), target: :_blank
+        td
+          - if environment.id == composited_screenshot.before_captured_environment_id
+            = link_to composited_screenshot.compared_image.url(:normal), target: :_blank do
+              - image_tag composited_screenshot.compared_image.url(:top), style: "max-width: 400px"

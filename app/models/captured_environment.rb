@@ -8,6 +8,8 @@ class CapturedEnvironment < ActiveRecord::Base
 
   belongs_to :captured_page
 
+  has_many :composited_screenshots, foreign_key: :before_captured_environment_id
+
   has_attached_file :screenshot, styles: { normal: "", top: "" },
     convert_options: {
       top: "-crop 1024x720+0+0",
