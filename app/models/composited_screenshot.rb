@@ -1,6 +1,6 @@
 class CompositedScreenshot < ActiveRecord::Base
-  belongs_to :captured_environment_a, foreign_key: :captured_environment_a_id, class: CapturedEnvironment
-  belongs_to :captured_environment_b, foreign_key: :captured_environment_b_id, class: CapturedEnvironment
+  belongs_to :captured_environment_before, foreign_key: :captured_environment_before_id, class: CapturedEnvironment
+  belongs_to :captured_environment_after,  foreign_key: :captured_environment_after_id, class: CapturedEnvironment
 
   has_attached_file :compared_image, styles: { normal: "", top: "" },
     all: "-quality 19 -strip -resize 70%"
@@ -9,11 +9,19 @@ class CompositedScreenshot < ActiveRecord::Base
   def self.crete_compared_image(captured_environment_a, captured_environment_b)
     tempfile = Tempfile.new(["c", "png"])
     averaged_pixel = `composite -compose difference #{captured_environment_a.screenshot.path} #{captured_environment_b.screenshot.path} #{tempfile.path}`.to_i
-    create!(
-      captured_environment_a: captured_environment_a,
-      captured_environment_b: captured_environment_b,
-      averaged_pixel:         averaged_pixel,
-      compared_image:         File.open(tempfile.path)
+    attrs = {
+      captured_environment_before: captured_environment_a,
+      captured_environment_after: captured_environment_b
+    }
+    composited_screenshot = find_by(attrs)
+    attrs.merge!(
+      averaged_pixel: averaged_pixel,
+      compared_image: File.open(tempfile.path)
     )
+    if composited_screenshot
+      composited_screenshot.update(attrs)
+    else
+      create!(attrs)
+    end
   end
 end

@@ -13,5 +13,5 @@ class CapturedEnvironment < ActiveRecord::Base
       top: "-crop 1024x720+0+0",
       all: "-quality 19 -strip -resize 70%",
   }
-    validates_attachment_content_type :screenshot, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_content_type :screenshot, :content_type => /\Aimage\/.*\Z/
 end
