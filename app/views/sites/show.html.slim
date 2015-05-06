@@ -16,4 +16,4 @@ table border=1
       td = link_to '詳細', [@site, captured_version]
       td
         - if captured_version.composited_screenshot
-          = link_to "あるよ", composited_screenshots_path(from_version_id: captured_version)
+          = link_to "あるよ", composited_screenshots_path(from_version_id: captured_version, to_version_id: captured_version.composited_screenshot.after_captured_version_id)

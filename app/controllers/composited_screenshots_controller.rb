@@ -4,7 +4,7 @@ class CompositedScreenshotsController < ApplicationController
     @site = @from_captured_version.site
     @composited_screenshots = CompositedScreenshot.where(
       before_captured_version_id: params[:from_version_id],
-      after_captured_version_id: params[:from_version_id].to_i + 1
+      after_captured_version_id: params[:to_version_id]
     )
 
     @captured_environment_with_names = CapturedEnvironment.
