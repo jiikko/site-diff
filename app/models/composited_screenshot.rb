@@ -13,7 +13,8 @@ class CompositedScreenshot < ActiveRecord::Base
 
   def self.crete_compared_image(before_version, after_version, captured_environment_a, captured_environment_b)
     tempfile = Tempfile.new(["c", "png"])
-    averaged_pixel = `composite -compose difference #{captured_environment_a.screenshot.path} #{captured_environment_b.screenshot.path} #{tempfile.path}`.to_i
+    `composite -compose difference #{captured_environment_a.screenshot.path} #{captured_environment_b.screenshot.path} #{tempfile.path}`
+    averaged_pixel =`identify -format "%[mean]" #{tempfile.path}`.to_i
     attrs = {
       before_captured_version:     before_version,
       after_captured_version:      after_version,

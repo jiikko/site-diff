@@ -20,6 +20,7 @@ h1
         td
           p = link_to environment.captured_page.target_page.path, environment.captured_page.target_page.fullpath, target: :_blank
           = link_to '元画像(でかい)', composited_screenshot.compared_image.url(:original), target: :_blank
+          p = composited_screenshot.averaged_pixel
         td
           - if environment.id == composited_screenshot.before_captured_environment_id
             = link_to composited_screenshot.compared_image.url(:normal), target: :_blank do
