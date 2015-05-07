@@ -12,7 +12,7 @@ class CompositedScreenshot < ActiveRecord::Base
   validates_attachment_content_type :compared_image, :content_type => /\Aimage\/.*\Z/
 
   def self.crete_compared_image(before_version, after_version, captured_environment_a, captured_environment_b)
-    tempfile = Tempfile.new(["c", "png"])
+    tempfile = Tempfile.new(["ss", ".png"])
     `composite -compose difference #{captured_environment_a.screenshot.path} #{captured_environment_b.screenshot.path} #{tempfile.path}`
     averaged_pixel =`identify -format "%[mean]" #{tempfile.path}`.to_i
     attrs = {
