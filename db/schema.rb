@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505175004) do
+ActiveRecord::Schema.define(version: 20150507212848) do
+
+  create_table "browser_cookies", force: :cascade do |t|
+    t.string   "name",           limit: 255
+    t.string   "value",          limit: 255
+    t.integer  "target_page_id", limit: 4,   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "browser_cookies", ["target_page_id"], name: "index_browser_cookies_on_target_page_id", using: :btree
 
   create_table "captured_environments", force: :cascade do |t|
     t.string   "name",                    limit: 255
