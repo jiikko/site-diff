@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jiikko/sugoi_webpage_capture.git
-  revision: a155932d6f9c555d4a5c8c1ee588109501880d54
+  revision: 2fdc7d5297d5046d37c8fe5a794f82f69608d6aa
   branch: edge
   specs:
     sugoi_webpage_capture (0.0.3)
@@ -88,7 +88,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.2)
-    loofah (2.0.1)
+    loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
@@ -112,7 +112,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
-    rack (1.6.0)
+    rack (1.6.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.1)
