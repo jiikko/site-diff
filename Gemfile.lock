@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jiikko/sugoi_webpage_capture.git
-  revision: 2fdc7d5297d5046d37c8fe5a794f82f69608d6aa
+  revision: d64a56ea2bce2cafdfc6db09e58f7d0e4eb48240
   branch: edge
   specs:
     sugoi_webpage_capture (0.0.3)
@@ -166,7 +166,7 @@ GEM
     spring (1.3.5)
     sprockets (3.0.3)
       rack (~> 1.0)
-    sprockets-rails (2.2.4)
+    sprockets-rails (2.3.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)

@@ -9,6 +9,8 @@ namespace :db do
       site.create_captured_version_with_inc!
       puts "current version is #{site.captured_version.name}."
       site.target_pages.each do |target_page|
+        target_page.create_browser_cookie # TODO remove
+
         if ENV["DEBUG"]
           puts "start #{target_page.fullpath}"
         end
@@ -21,12 +23,10 @@ namespace :db do
               puts "  #{environment_name}"
             end
             browser = SugoiWebpageCapture::Browser.new(environment_name)
-            Capybara.current_session.driver.browser.get("http://iko-yo.net/")
-            Capybara.current_session.driver.browser.manage.delete_all_cookies
-            Capybara.current_session.driver.browser.manage.add_cookie(name: "header_content", value: 'shared/header_content02' )
             captured_page.captured_environments.create!(
               name: environment_name,
               screenshot: browser.capture(target_page.fullpath) { |x|
+                target_page.browser_cookie.set(x)
                 sleep(2) if environment_name == :chrome
               }.tempfile
             )
