@@ -58,10 +58,10 @@ ActiveRecord::Schema.define(version: 20150507212848) do
     t.integer  "after_captured_version_id",      limit: 4,   null: false
     t.integer  "before_captured_environment_id", limit: 4,   null: false
     t.integer  "after_captured_environment_id",  limit: 4,   null: false
-    t.string   "compared_image_file_name",       limit: 255
-    t.string   "compared_image_content_type",    limit: 255
-    t.integer  "compared_image_file_size",       limit: 4
-    t.datetime "compared_image_updated_at"
+    t.string   "image_file_name",                limit: 255
+    t.string   "image_content_type",             limit: 255
+    t.integer  "image_file_size",                limit: 4
+    t.datetime "image_updated_at"
     t.integer  "averaged_pixel",                 limit: 4
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false

@@ -2,7 +2,11 @@ namespace :db do
   # こういうふうに使う => $ bundle exec rake db:compare SITES=google,gigazine
   desc "最近からふたつのバージョンを比較する"
   task compare: :environment do
-    ENV['SITES'].split(/,/).each do |site_name|
+    site_names = (ENV['SITES'] || '').split(/,/)
+    if site_names.blank?
+      site_names = Site.pluck(:name)
+    end
+    site_names.each do |site_name|
       site = Site.find_by!(name: site_name)
       version_before, version_after = site.captured_versions.last(2) # a is later, b is last
       puts "compare version to #{version_before.name}, #{version_after.name}"
@@ -19,7 +23,7 @@ namespace :db do
             puts '[INFO] 前後の画像が欠けているのでSkipする'
             next
           end
-          CompositedScreenshot.crete_compared_image(
+          CompositedScreenshot.compare_and_create(
             version_before,
             version_after,
             environment_before,

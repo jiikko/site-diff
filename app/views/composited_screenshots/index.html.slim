@@ -20,7 +20,7 @@ table border=1
       td = link_to target_page.path, target_page.fullpath, target: :_blank
       - screenshots.each do |screenshot|
         td
-          = link_to screenshot.compared_image.url(:normal), target: :_blank, data: { lightbox: :roadtrip } do
-            - image_tag screenshot.compared_image.url(:top), style: "max-height: 300px", data: { lightbox: "image-1" }
+          = link_to screenshot.image.url(:normal), target: :_blank, data: { lightbox: :roadtrip } do
+            - image_tag screenshot.image.url(:top), style: "max-height: 300px", data: { lightbox: "image-1" }
           p = screenshot.averaged_pixel
-          p = link_to '元画像(でかい)', screenshot.compared_image.url(:original), target: :_blank
+          p = link_to '元画像(でかい)', screenshot.image.url(:original), target: :_blank

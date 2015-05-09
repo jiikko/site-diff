@@ -4,7 +4,11 @@ namespace :db do
   # こういうふうに使う => $ bundle exec rake db:capture SITES=google,gigazine
   desc "capture"
   task capture: :environment do
-    ENV['SITES'].split(/,/).each do |site_name|
+    site_names = (ENV['SITES'] || '').split(/,/)
+    if site_names.blank?
+      site_names = Site.pluck(:name)
+    end
+    site_names.each do |site_name|
       site = Site.find_by!(name: site_name)
       site.create_captured_version_with_inc!
       puts "starting version is #{site.captured_version.name}."
