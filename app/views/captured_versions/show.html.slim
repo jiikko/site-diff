@@ -5,17 +5,16 @@ h1
   = @site.name
 = link_to "戻", @site
 
-- CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
-  h2 = environment_name
-  table border=1
+table border=1
+  tr
+    th PATH
+    - CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+      th = environment_name
+  - @captured_version.captured_pages.each do |captured_page|
     tr
-      th Path
-      th
-    - (@captured_environment_with_names[environment_name.to_s] || []).each do |environment|
-      tr
+      td = link_to captured_page.target_page.path,  captured_page.target_page.fullpath, target: :_blank
+      - captured_page.captured_environments.order(:name).each do |environment|
         td
-          p = link_to environment.captured_page.target_page.path, environment.captured_page.target_page.fullpath, target: :_blank
-          = link_to '元画像(でかい)', environment.screenshot.url(:original), target: :_blank
-        td
-          = link_to environment.screenshot.url(:normal), target: :_blank do
-            - image_tag environment.screenshot.url(:top), style: "max-width: 400px"
+          = link_to environment.screenshot.url(:normal), target: :_blank, data: { lightbox: :roadtrip } do
+            - image_tag environment.screenshot.url(:top), style: "max-height: 300px", data: { lightbox: "image-1" }
+          p = link_to '元画像(でかい)', environment.screenshot.url(:original), target: :_blank
