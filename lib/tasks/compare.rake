@@ -8,7 +8,7 @@ namespace :db do
       puts "compare version to #{version_before.name}, #{version_after.name}"
       captured_pages_before = version_before.captured_pages.group_by { |x| x.target_page.path }
       captured_pages_after = version_after.captured_pages.group_by { |x| x.target_page.path }
-      captured_pages_before.each do |before_key, before_value|
+      Parallel.each(captured_pages_before) do |before_key, before_value|
         puts "start #{before_key}"
         captured_page_before = before_value.first
         # target_page-captured_page の図. 1つしか要素がないのでfirst

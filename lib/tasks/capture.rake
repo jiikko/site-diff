@@ -8,7 +8,11 @@ namespace :db do
       site = Site.find_by!(name: site_name)
       site.create_captured_version_with_inc!
       puts "starting version is #{site.captured_version.name}."
-      # CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+      site.target_pages.each { |target_page| # 並列環境で実行するととりあいになるので
+        site.captured_version.captured_pages.find_or_create_by(
+          target_page: target_page
+        )
+      }
       Parallel.each(CapturedEnvironment::ENVIRONMENTS, in_processes: 4) do |environment_name|
         browser = SugoiWebpageCapture::Browser.new(environment_name)
         site.target_pages.each { |target_page|
