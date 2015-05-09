@@ -26,6 +26,7 @@ gem 'capybara'
 gem 'selenium-webdriver'
 gem 'chromedriver-helper'
 gem 'sugoi_webpage_capture', require: false, github: 'jiikko/sugoi_webpage_capture', branch: 'edge'
+gem 'parallel'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
