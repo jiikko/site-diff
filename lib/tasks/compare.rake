@@ -12,7 +12,6 @@ namespace :db do
         puts "start #{before_key}"
         captured_page_before = before_value.first
         # target_page-captured_page の図. 1つしか要素がないのでfirst
-        captured_pages_after[before_key].first.captured_environments
         captured_pages_after[before_key].first.captured_environments.each do |environment_after|
           puts "  #{environment_after.name}"
           environment_before = captured_page_before.captured_environments.detect { |x| x.name == environment_after.name }

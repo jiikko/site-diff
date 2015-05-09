@@ -7,13 +7,10 @@ namespace :db do
     ENV['SITES'].split(/,/).each do |site_name|
       site = Site.find_by!(name: site_name)
       site.create_captured_version_with_inc!
-      puts "current version is #{site.captured_version.name}."
+      puts "starting version is #{site.captured_version.name}."
       # CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
-      Parallel.each(CapturedEnvironment::ENVIRONMENTS) do |environment_name|
+      Parallel.each(CapturedEnvironment::ENVIRONMENTS, in_processes: 4) do |environment_name|
         browser = SugoiWebpageCapture::Browser.new(environment_name)
-        if ENV["DEBUG"]
-          puts "up #{environment_name}"
-        end
         site.target_pages.each { |target_page|
           if ENV["DEBUG"]
             print "."
@@ -22,7 +19,7 @@ namespace :db do
           unless target_page.browser_cookie
             target_page.create_browser_cookie # TODO remove
           end
-          captured_page = site.captured_version.captured_pages.create!(
+          captured_page = site.captured_version.captured_pages.find_or_create_by(
             target_page: target_page
           )
           CapturedEnvironment.create!(
@@ -36,6 +33,8 @@ namespace :db do
         }
         browser.quit
       end
+
+      puts
     end
   end
 end
