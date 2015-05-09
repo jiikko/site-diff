@@ -8,21 +8,17 @@ h1
 
 = link_to '戻', @site
 
-- CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
-  h2 = environment_name
-  table border=1
+
+table border=1
+  tr
+    th PATH
+    - CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+      th = environment_name
+  - @composited_screenshots_with_path.each do |target_page, screenshots|
     tr
-      th Path
-      th
-    - (@captured_environment_with_names[environment_name.to_s] || []).each do |environment|
-      - composited_screenshot = @composited_screenshots.detect { |x| x.before_captured_environment_id == environment.id  }
-      - if composited_screenshot
-        tr
-          td
-            p = link_to environment.captured_page.target_page.path, environment.captured_page.target_page.fullpath, target: :_blank
-            = link_to '元画像(でかい)', composited_screenshot.compared_image.url(:original), target: :_blank
-            p = composited_screenshot.averaged_pixel
-          td
-            - if environment.id == composited_screenshot.before_captured_environment_id
-              = link_to composited_screenshot.compared_image.url(:normal), target: :_blank do
-                - image_tag composited_screenshot.compared_image.url(:top), style: "max-width: 400px"
+      td = link_to target_page.path, target_page.fullpath, target: :_blank
+      - screenshots.each do |screenshot|
+        td
+          = link_to screenshot.compared_image.url(:normal), target: :_blank, data: { lightbox: :roadtrip } do
+            - image_tag screenshot.compared_image.url(:top), style: "max-height: 300px", data: { lightbox: "image-1" }
+          p = link_to '元画像(でかい)', screenshot.compared_image.url(:original), target: :_blank

@@ -6,6 +6,6 @@ class CapturedVersion < ActiveRecord::Base
 
   has_many :captured_pages
   has_many :captured_environments, through: :captured_pages # unuse
-  # need chain 'where' to after_captured_environment_id
-  has_many :composited_screenshots, through: :captured_environments # unuse
+
+  has_many :before_composited_screenshots, foreign_key: :before_captured_version_id, class: CompositedScreenshot
 end
