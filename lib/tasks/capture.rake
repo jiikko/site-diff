@@ -8,32 +8,33 @@ namespace :db do
       site = Site.find_by!(name: site_name)
       site.create_captured_version_with_inc!
       puts "current version is #{site.captured_version.name}."
-      site.target_pages.each do |target_page|
-        unless target_page.browser_cookie
-          target_page.create_browser_cookie # TODO remove
-        end
-
+      # CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
+      Parallel.each(CapturedEnvironment::ENVIRONMENTS) do |environment_name|
+        browser = SugoiWebpageCapture::Browser.new(environment_name)
         if ENV["DEBUG"]
-          puts "start #{target_page.fullpath}"
+          puts "up #{environment_name}"
         end
-        captured_page = site.captured_version.captured_pages.create!(
-          target_page: target_page
-        )
-        Parallel.each(CapturedEnvironment::ENVIRONMENTS) do |environment_name|
-        # CapturedEnvironment::ENVIRONMENTS.each do |environment_name|
-          browser = SugoiWebpageCapture::Browser.new(environment_name)
+        site.target_pages.each { |target_page|
           if ENV["DEBUG"]
-            puts "  #{environment_name}"
+            print "."
           end
-          captured_page.captured_environments.create!(
+
+          unless target_page.browser_cookie
+            target_page.create_browser_cookie # TODO remove
+          end
+          captured_page = site.captured_version.captured_pages.create!(
+            target_page: target_page
+          )
+          CapturedEnvironment.create!(
             name: environment_name,
+            captured_page: captured_page,
             screenshot: browser.capture(target_page.fullpath) { |x|
               target_page.browser_cookie.set(x)
               sleep(2) if environment_name == :chrome
             }.tempfile
           )
-          browser.quit
-        end
+        }
+        browser.quit
       end
     end
   end
