@@ -2,7 +2,7 @@ class CompositedScreenshotsController < ApplicationController
   def index
     @from_captured_version = CapturedVersion.find(params[:from_version_id])
     @site = @from_captured_version.site
-    @composited_screenshots_with_path = CompositedScreenshot.where(
+    @composited_screenshots_with_target_page = CompositedScreenshot.where(
       before_captured_version_id: params[:from_version_id],
       after_captured_version_id:  params[:to_version_id]
     ).includes(before_captured_environment: :captured_page).
