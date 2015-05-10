@@ -10,7 +10,7 @@ namespace :db do
     end
     site_names.each do |site_name|
       site = Site.find_by!(name: site_name)
-      site.create_captured_version_with_inc!
+      site.inc_captured_version!
       puts "starting version is #{site.captured_version.name}."
       site.target_pages.each { |target_page| # 並列環境で実行するととりあいになるので
         site.captured_version.captured_pages.find_or_create_by(
